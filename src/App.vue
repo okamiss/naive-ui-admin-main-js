@@ -16,7 +16,7 @@
   </transition>
 </template>
 
-<script lang="ts" setup>
+<script  setup>
   import { computed, onMounted, onUnmounted } from 'vue';
   import { zhCN, dateZhCN, darkTheme } from 'naive-ui';
   import { LockScreen } from '@/components/Lockscreen';
@@ -53,7 +53,7 @@
 
   const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : undefined));
 
-  let timer: NodeJS.Timer;
+  let timer;
 
   const timekeeping = () => {
     clearInterval(timer);

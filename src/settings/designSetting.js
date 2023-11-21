@@ -1,5 +1,5 @@
 // app theme preset color
-export const appThemeList: string[] = [
+export const appThemeList = [
   '#2d8cf0',
   '#0960bd',
   '#0084f4',

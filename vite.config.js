@@ -1,4 +1,4 @@
-import type { UserConfig, ConfigEnv } from 'vite';
+
 import { loadEnv } from 'vite';
 import { resolve } from 'path';
 import { wrapperEnv } from './build/utils';
@@ -14,11 +14,11 @@ const __APP_INFO__ = {
   lastBuildTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
 };
 
-function pathResolve(dir: string) {
+function pathResolve(dir) {
   return resolve(process.cwd(), '.', dir);
 }
 
-export default ({ command, mode }: ConfigEnv): UserConfig => {
+export default ({ command, mode }) => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);

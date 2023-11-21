@@ -1,5 +1,5 @@
 import { h, unref } from 'vue';
-import type { App, Plugin, Component } from 'vue';
+
 import { NIcon, NTag } from 'naive-ui';
 import { PageEnum } from '@/enums/pageEnum';
 import { isObject } from './is/index';
@@ -13,13 +13,13 @@ export function renderIcon(icon) {
 /**
  * font 图标(Font class)
  * */
-export function renderFontClassIcon(icon: string, iconName = 'iconfont') {
+export function renderFontClassIcon(icon, iconName = 'iconfont') {
   return () => h('span', { class: [iconName, icon] });
 }
 /**
  * font 图标(Unicode)
  * */
-export function renderUnicodeIcon(icon: string, iconName = 'iconfont') {
+export function renderUnicodeIcon(icon, iconName = 'iconfont') {
   return () => h('span', { class: [iconName], innerHTML: icon });
 }
 /**
@@ -37,10 +37,10 @@ export function renderfontsvg(icon) {
  * render new Tag
  * */
 const newTagColors = { color: '#f90', textColor: '#fff', borderColor: '#f90' };
-export function renderNew(type = 'warning', text = 'New', color: object = newTagColors) {
+export function renderNew(type = 'warning', text = 'New', color = newTagColors) {
   return () =>
     h(
-      NTag as any,
+      NTag,
       {
         type,
         round: true,
@@ -54,7 +54,7 @@ export function renderNew(type = 'warning', text = 'New', color: object = newTag
 /**
  * 递归组装菜单格式
  */
-export function generatorMenu(routerMap: Array<any>) {
+export function generatorMenu(routerMap) {
   return filterRouter(routerMap).map((item) => {
     const isRoot = isRootRouter(item);
     const info = isRoot ? item.children[0] : item;
@@ -77,11 +77,11 @@ export function generatorMenu(routerMap: Array<any>) {
 /**
  * 混合菜单
  * */
-export function generatorMenuMix(routerMap: Array<any>, routerName: string, location: string) {
+export function generatorMenuMix(routerMap, routerName, location) {
   const cloneRouterMap = cloneDeep(routerMap);
   const newRouter = filterRouter(cloneRouterMap);
   if (location === 'header') {
-    const firstRouter: any[] = [];
+    const firstRouter = [];
     newRouter.forEach((item) => {
       const isRoot = isRootRouter(item);
       const info = isRoot ? item.children[0] : item;
@@ -103,7 +103,7 @@ export function generatorMenuMix(routerMap: Array<any>, routerName: string, loca
 /**
  * 递归组装子菜单
  * */
-export function getChildrenRouter(routerMap: Array<any>) {
+export function getChildrenRouter(routerMap) {
   return filterRouter(routerMap).map((item) => {
     const isRoot = isRootRouter(item);
     const info = isRoot ? item.children[0] : item;
@@ -135,7 +135,7 @@ export function isRootRouter(item) {
 /**
  * 排除Router
  * */
-export function filterRouter(routerMap: Array<any>) {
+export function filterRouter(routerMap) {
   return routerMap.filter((item) => {
     return (
       (item.meta?.hidden || false) != true &&
@@ -144,22 +144,22 @@ export function filterRouter(routerMap: Array<any>) {
   });
 }
 
-export const withInstall = <T extends Component>(component: T, alias?: string) => {
-  const comp = component as any;
-  comp.install = (app: App) => {
+export const withInstall = (component, alias) => {
+  const comp = component;
+  comp.install = (app) => {
     app.component(comp.name || comp.displayName, component);
     if (alias) {
       app.config.globalProperties[alias] = component;
     }
   };
-  return component as T & Plugin;
+  return component;
 };
 
 /**
  *  找到对应的节点
  * */
 let result = null;
-export function getTreeItem(data: any[], key?: string | number): any {
+export function getTreeItem(data, key) {
   data.map((item) => {
     if (item.key === key) {
       result = item;
@@ -175,8 +175,8 @@ export function getTreeItem(data: any[], key?: string | number): any {
 /**
  *  找到所有节点
  * */
-const treeAll: any[] = [];
-export function getTreeAll(data: any[]): any[] {
+const treeAll = [];
+export function getTreeAll(data) {
   data.map((item) => {
     treeAll.push(item.key);
     if (item.children && item.children.length) {
@@ -187,18 +187,18 @@ export function getTreeAll(data: any[]): any[] {
 }
 
 // dynamic use hook props
-export function getDynamicProps<T extends {}, U>(props: T): Partial<U> {
-  const ret: Recordable = {};
+export function getDynamicProps(props) {
+  const ret = {};
 
   Object.keys(props).map((key) => {
-    ret[key] = unref((props as Recordable)[key]);
+    ret[key] = unref((props)[key]);
   });
 
-  return ret as Partial<U>;
+  return ret;
 }
 
-export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
-  let key: string;
+export function deepMerge(src = {}, target = {}) {
+  let key;
   for (key in target) {
     src[key] = isObject(src[key]) ? deepMerge(src[key], target[key]) : (src[key] = target[key]);
   }
@@ -211,7 +211,7 @@ export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
  * @param {number} amount The amount to change the color by
  * @returns {string} The processed part of the color
  */
-function addLight(color: string, amount: number) {
+function addLight(color, amount) {
   const cc = parseInt(color, 16) + amount;
   const c = cc > 255 ? 255 : cc;
   return c.toString(16).length > 1 ? c.toString(16) : `0${c.toString(16)}`;
@@ -223,7 +223,7 @@ function addLight(color: string, amount: number) {
  * @param {number} amount The amount to change the color by
  * @returns {string} The processed color represented as HEX
  */
-export function lighten(color: string, amount: number) {
+export function lighten(color, amount) {
   color = color.indexOf('#') >= 0 ? color.substring(1, color.length) : color;
   amount = Math.trunc((255 * amount) / 100);
   return `#${addLight(color.substring(0, 2), amount)}${addLight(
@@ -235,6 +235,6 @@ export function lighten(color: string, amount: number) {
 /**
  * 判断是否 url
  * */
-export function isUrl(url: string) {
+export function isUrl(url) {
   return /^(http|https):\/\//g.test(url);
 }

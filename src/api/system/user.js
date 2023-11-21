@@ -1,16 +1,6 @@
 import { http } from '@/utils/http/axios';
 
-export interface BasicResponseModel<T = any> {
-  code: number;
-  message: string;
-  result: T;
-}
 
-export interface BasicPageParams {
-  pageNumber: number;
-  pageSize: number;
-  total: number;
-}
 
 /**
  * @description: 获取用户信息
@@ -26,7 +16,7 @@ export function getUserInfo() {
  * @description: 用户登录
  */
 export function login(params) {
-  return http.request<BasicResponseModel>(
+  return http.request(
     {
       url: '/login',
       method: 'POST',
