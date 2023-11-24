@@ -3,7 +3,7 @@ import { ComponentType } from './types/index';
 /**
  * @description: 生成placeholder
  */
-export function createPlaceholderMessage(component: ComponentType) {
+export function createPlaceholderMessage(component) {
   if (component === 'NInput') return '请输入';
   if (
     ['NPicker', 'NSelect', 'NCheckbox', 'NRadio', 'NSwitch', 'NDatePicker', 'NTimePicker'].includes(

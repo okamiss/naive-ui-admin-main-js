@@ -121,7 +121,7 @@
   </n-form>
 </template>
 
-<script lang="ts">
+<script>
   import { defineComponent, reactive, ref, computed, unref, onMounted, watch } from 'vue';
   import { createPlaceholderMessage } from './helper';
   import { useFormEvents } from './hooks/useFormEvents';
@@ -130,9 +130,7 @@
   import { basicProps } from './props';
   import { DownOutlined, UpOutlined, QuestionCircleOutlined } from '@vicons/antd';
 
-  import type { Ref } from 'vue';
-  import type { GridProps } from 'naive-ui/lib/grid';
-  import type { FormSchema, FormProps, FormActionType } from './types/form';
+
 
   import { isArray } from '@/utils/is/index';
   import { deepMerge } from '@/utils';
@@ -145,11 +143,11 @@
     },
     emits: ['reset', 'submit', 'register'],
     setup(props, { emit, attrs }) {
-      const defaultFormModel = ref<Recordable>({});
-      const formModel = reactive<Recordable>({});
-      const propsRef = ref<Partial<FormProps>>({});
-      const schemaRef = ref<Nullable<FormSchema[]>>(null);
-      const formElRef = ref<Nullable<FormActionType>>(null);
+      const defaultFormModel = ref({});
+      const formModel = reactive({});
+      const propsRef = ref({});
+      const schemaRef = ref(null);
+      const formElRef = ref(null);
       const gridCollapsed = ref(true);
       const loadingSub = ref(false);
       const isUpdateDefaultRef = ref(false);
@@ -184,12 +182,12 @@
         };
       }
 
-      const getProps = computed((): FormProps => {
-        const formProps = { ...props, ...unref(propsRef) } as FormProps;
-        const rulesObj: any = {
+      const getProps = computed(() => {
+        const formProps = { ...props, ...unref(propsRef) };
+        const rulesObj = {
           rules: {},
         };
-        const schemas: any = formProps.schemas || [];
+        const schemas = formProps.schemas || [];
         schemas.forEach((item) => {
           if (item.rules && isArray(item.rules)) {
             rulesObj.rules[item.field] = item.rules;
@@ -203,7 +201,7 @@
         return layout === 'inline';
       });
 
-      const getGrid = computed((): GridProps => {
+      const getGrid = computed(() => {
         const { gridProps } = unref(getProps);
         return {
           ...gridProps,
@@ -213,11 +211,11 @@
       });
 
       const getBindValue = computed(
-        () => ({ ...attrs, ...props, ...unref(getProps) } as Recordable)
+        () => ({ ...attrs, ...props, ...unref(getProps) })
       );
 
-      const getSchema = computed((): FormSchema[] => {
-        const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
+      const getSchema = computed(() => {
+        const schemas = unref(schemaRef) || (unref(getProps).schemas);
         for (const schema of schemas) {
           const { defaultValue } = schema;
           // handle date type
@@ -226,7 +224,7 @@
             schema.defaultValue = defaultValue;
           }
         }
-        return schemas as FormSchema[];
+        return schemas;
       });
 
       const { handleFormValues, initDefault } = useFormValues({
@@ -241,7 +239,7 @@
           getProps,
           formModel,
           getSchema,
-          formElRef: formElRef as Ref<FormActionType>,
+          formElRef: formElRef,
           defaultFormModel,
           loadingSub,
           handleFormValues,
@@ -251,11 +249,11 @@
         gridCollapsed.value = !gridCollapsed.value;
       }
 
-      async function setProps(formProps: Partial<FormProps>): Promise<void> {
+      async function setProps(formProps){
         propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
       }
 
-      const formActionType: Partial<FormActionType> = {
+      const formActionType= {
         getFieldsValue,
         setFieldsValue,
         resetFields,

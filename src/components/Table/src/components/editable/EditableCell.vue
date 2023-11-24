@@ -31,10 +31,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-  import type { PropType } from 'vue';
-  import type { BasicColumn } from '../../types/table';
-  import type { EditRecordRow } from './index';
+<script >
 
   import { defineComponent, ref, unref, nextTick, computed, watchEffect, toRaw } from 'vue';
   import { FormOutlined, CloseOutlined, CheckOutlined } from '@vicons/antd';
@@ -60,14 +57,14 @@
     },
     props: {
       value: {
-        type: [String, Number, Boolean, Object] as PropType<string | number | boolean | Recordable>,
+        type: [String, Number, Boolean, Object],
         default: '',
       },
       record: {
-        type: Object as PropType<EditRecordRow>,
+        type: Object,
       },
       column: {
-        type: Object as PropType<BasicColumn>,
+        type: Object,
         default: () => ({}),
       },
       index: propTypes.number,
@@ -100,7 +97,7 @@
         const compProps = props.column?.editComponentProps ?? {};
         const editComponent = props.column?.editComponent ?? null;
         const component = unref(getComponent);
-        const apiSelectProps: Recordable = {};
+        const apiSelectProps = {};
 
         const isCheckValue = unref(getIsCheckComp);
 
@@ -115,7 +112,7 @@
             if (compProps.valueFormat) {
               valueField = 'formatted-value';
             } else {
-              value = parseISO(value as any).getTime();
+              value = parseISO(value).getTime();
             }
           } else if (isArray(value)) {
             if (compProps.valueFormat) {
@@ -126,7 +123,7 @@
           }
         }
 
-        const onEvent: any = editComponent ? EventEnum[editComponent] : undefined;
+        const onEvent = editComponent ? EventEnum[editComponent] : undefined;
 
         return {
           placeholder: createPlaceholderMessage(unref(getComponent)),
@@ -151,7 +148,7 @@
           return value;
         }
 
-        const options: LabelValueOptions = editComponentProps?.options ?? (unref(optionsRef) || []);
+        const options = editComponentProps?.options ?? (unref(optionsRef) || []);
         const option = options.find((item) => `${item.value}` === `${value}`);
 
         return option?.label ?? value;
@@ -188,15 +185,15 @@
         });
       }
 
-      async function handleChange(e: any) {
+      async function handleChange(e) {
         const component = unref(getComponent);
         const compProps = props.column?.editComponentProps ?? {};
         if (!e) {
           currentValueRef.value = e;
         } else if (e?.target && Reflect.has(e.target, 'value')) {
-          currentValueRef.value = (e as ChangeEvent).target.value;
+          currentValueRef.value = (e).target.value;
         } else if (component === 'NCheckbox') {
-          currentValueRef.value = (e as ChangeEvent).target.checked;
+          currentValueRef.value = (e).target.checked;
         } else if (isString(e) || isBoolean(e) || isNumber(e)) {
           currentValueRef.value = e;
         }
@@ -240,7 +237,7 @@
             return false;
           }
           if (isFunction(editRule)) {
-            const res = await editRule(currentValue, record as Recordable);
+            const res = await editRule(currentValue, record);
             if (!!res) {
               ruleMessage.value = res;
               ruleVisible.value = true;
@@ -267,7 +264,7 @@
         const value = unref(currentValueRef);
         if (!key) return;
 
-        const dataKey = key as string;
+        const dataKey = key;
 
         set(record, dataKey, value);
         //const record = await table.updateTableData(index, dataKey, value);
@@ -309,11 +306,11 @@
       }
 
       // only ApiSelect
-      function handleOptionsChange(options: LabelValueOptions) {
+      function handleOptionsChange(options) {
         optionsRef.value = options;
       }
 
-      function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
+      function initCbs(cbs, handle) {
         if (props.record) {
           /* eslint-disable  */
           isArray(props.record[cbs])

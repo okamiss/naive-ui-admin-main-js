@@ -1,10 +1,9 @@
 import { ref, unref, getCurrentInstance, watch } from 'vue';
 import { isProdMode } from '@/utils/env';
-import { ModalMethods, UseModalReturnType } from '../type';
 import { getDynamicProps } from '@/utils';
 import { tryOnUnmounted } from '@vueuse/core';
-export function useModal(props): UseModalReturnType {
-  const modalRef = ref<Nullable<ModalMethods>>(null);
+export function useModal(props) {
+  const modalRef = ref(null);
   const currentInstance = getCurrentInstance();
 
   const getInstance = () => {
@@ -15,7 +14,7 @@ export function useModal(props): UseModalReturnType {
     return instance;
   };
 
-  const register = (modalInstance: ModalMethods) => {
+  const register = (modalInstance) => {
     isProdMode() &&
       tryOnUnmounted(() => {
         modalRef.value = null;
@@ -35,8 +34,8 @@ export function useModal(props): UseModalReturnType {
     );
   };
 
-  const methods: ModalMethods = {
-    setProps: (props): void => {
+  const methods = {
+    setProps: (props) => {
       getInstance()?.setProps(props);
     },
     openModal: () => {

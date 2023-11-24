@@ -77,7 +77,7 @@
   </n-layout>
 </template>
 
-<script lang="ts" setup>
+<script setup>
   import { ref, unref, computed, onMounted } from 'vue';
   import { Logo } from './components/Logo';
   import { TabsView } from './components/TagsView';
@@ -101,11 +101,11 @@
 
   const settingStore = useProjectSettingStore();
 
-  const collapsed = ref<boolean>(false);
+  const collapsed = ref(false);
 
   const { mobileWidth, menuWidth } = unref(menuSetting);
 
-  const isMobile = computed<boolean>({
+  const isMobile = computed({
     get: () => settingStore.getIsMobile,
     set: (val) => settingStore.setIsMobile(val),
   });

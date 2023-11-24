@@ -5,11 +5,11 @@ import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
 import { isProdMode } from '@/utils/env';
 import { getDynamicProps } from '@/utils';
 
-type Props = Partial<DynamicProps<FormProps>>;
 
-export function useForm(props?: Props): UseFormReturnType {
-  const formRef = ref<Nullable<FormActionType>>(null);
-  const loadedRef = ref<Nullable<boolean>>(false);
+
+export function useForm(props) {
+  const formRef = ref(null);
+  const loadedRef = ref(false);
 
   async function getForm() {
     const form = unref(formRef);
@@ -19,10 +19,10 @@ export function useForm(props?: Props): UseFormReturnType {
       );
     }
     await nextTick();
-    return form as FormActionType;
+    return form;
   }
 
-  function register(instance: FormActionType) {
+  function register(instance) {
     isProdMode() &&
       onUnmounted(() => {
         formRef.value = null;
@@ -45,8 +45,8 @@ export function useForm(props?: Props): UseFormReturnType {
     );
   }
 
-  const methods: FormActionType = {
-    setProps: async (formProps: Partial<FormProps>) => {
+  const methods = {
+    setProps: async (formProps) => {
       const form = await getForm();
       await form.setProps(formProps);
     },
@@ -57,31 +57,31 @@ export function useForm(props?: Props): UseFormReturnType {
       });
     },
 
-    clearValidate: async (name?: string | string[]) => {
+    clearValidate: async (name) => {
       const form = await getForm();
       await form.clearValidate(name);
     },
 
-    getFieldsValue: <T>() => {
-      return unref(formRef)?.getFieldsValue() as T;
+    getFieldsValue() => {
+      return unref(formRef)?.getFieldsValue();
     },
 
-    setFieldsValue: async <T>(values: T) => {
+    setFieldsValue: async(values) => {
       const form = await getForm();
-      await form.setFieldsValue<T>(values);
+      await form.setFieldsValue(values);
     },
 
-    submit: async (): Promise<any> => {
+    submit: async () => {
       const form = await getForm();
       return form.submit();
     },
 
-    validate: async (nameList?: any[]): Promise<Recordable> => {
+    validate: async (nameList) => {
       const form = await getForm();
       return form.validate(nameList);
     },
 
-    setLoading: (value: boolean) => {
+    setLoading: (value) => {
       loadedRef.value = value;
     },
 

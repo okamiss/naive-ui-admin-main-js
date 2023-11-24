@@ -229,7 +229,7 @@
   </n-drawer>
 </template>
 
-<script lang="ts">
+<script>
   import { defineComponent, reactive, toRefs, unref, watch, computed } from 'vue';
   import { useProjectSettingStore } from '@/store/modules/projectSetting';
   import { useDesignSettingStore } from '@/store/modules/designSetting';

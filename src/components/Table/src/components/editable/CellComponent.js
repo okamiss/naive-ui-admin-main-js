@@ -6,15 +6,10 @@ import { h } from 'vue';
 
 import { NPopover } from 'naive-ui';
 
-export interface ComponentProps {
-  component: ComponentType;
-  rule: boolean;
-  popoverVisible: boolean;
-  ruleMessage: string;
-}
 
-export const CellComponent: FunctionalComponent = (
-  { component = 'NInput', rule = true, ruleMessage, popoverVisible }: ComponentProps,
+
+export const CellComponent = (
+  { component = 'NInput', rule = true, ruleMessage, popoverVisible },
   { attrs }
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;

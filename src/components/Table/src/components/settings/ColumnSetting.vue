@@ -91,7 +91,7 @@
   </n-tooltip>
 </template>
 
-<script lang="ts">
+<script>
   import { ref, defineComponent, reactive, unref, toRaw, computed, toRefs, watchEffect } from 'vue';
   import { useTableContext } from '../../hooks/useTableContext';
   import { cloneDeep } from 'lodash-es';
@@ -104,11 +104,6 @@
   import Draggable from 'vuedraggable';
   import { useDesignSetting } from '@/hooks/setting/useDesignSetting';
 
-  interface Options {
-    title: string;
-    key: string;
-    fixed?: boolean | 'left' | 'right';
-  }
 
   export default defineComponent({
     name: 'ColumnSetting',
@@ -121,9 +116,9 @@
     },
     setup() {
       const { getDarkTheme } = useDesignSetting();
-      const table: any = useTableContext();
-      const columnsList = ref<Options[]>([]);
-      const cacheColumnsList = ref<Options[]>([]);
+      const table = useTableContext();
+      const columnsList = ref([]);
+      const cacheColumnsList = ref([]);
 
       const state = reactive({
         selection: false,
@@ -145,8 +140,8 @@
 
       //初始化
       function init() {
-        const columns: any[] = getColumns();
-        const checkList: any = columns.map((item) => item.key);
+        const columns = getColumns();
+        const checkList = columns.map((item) => item.key);
         state.checkList = checkList;
         state.defaultCheckList = checkList;
         const newColumns = columns.filter((item) => item.key != 'action' && item.title != '操作');
@@ -171,7 +166,7 @@
 
       //获取
       function getColumns() {
-        let newRet: any[] = [];
+        let newRet = [];
         table.getColumns().forEach((item) => {
           newRet.push({ ...item });
         });
@@ -182,7 +177,7 @@
       function resetColumns() {
         state.checkList = [...state.defaultCheckList];
         state.checkAll = true;
-        let cacheColumnsKeys: any[] = table.getCacheColumns();
+        let cacheColumnsKeys = table.getCacheColumns();
         let newColumns = cacheColumnsKeys.map((item) => {
           return {
             ...item,

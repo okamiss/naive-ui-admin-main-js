@@ -74,7 +74,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script >
   import { defineComponent, reactive, toRefs } from 'vue';
   import { ResultEnum } from '@/enums/httpEnum';
   import recharge from './Recharge.vue';
@@ -92,7 +92,7 @@
   import { useTime } from '@/hooks/useTime';
   import { useBattery } from '@/hooks/useBattery';
   import { useScreenLockStore } from '@/store/modules/screenLock';
-  import { UserInfoType, useUserStore } from '@/store/modules/user';
+  import {  useUserStore } from '@/store/modules/user';
 
   export default defineComponent({
     name: 'ScreenLock',
@@ -117,7 +117,7 @@
       const route = useRoute();
 
       const { battery, batteryStatus, calcDischargingTime, calcChargingTime } = useBattery();
-      const userInfo: UserInfoType = userStore.getUserInfo || {};
+      const userInfo = userStore.getUserInfo || {};
       const username = userInfo['username'] || '';
       const state = reactive({
         showLogin: false,
@@ -131,7 +131,7 @@
       });
 
       // 解锁登录
-      const onLockLogin = (value: boolean) => (state.showLogin = value);
+      const onLockLogin = (value) => (state.showLogin = value);
 
       // 登录
       const onLogin = async () => {

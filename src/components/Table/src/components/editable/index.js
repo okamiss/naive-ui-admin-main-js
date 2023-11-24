@@ -3,11 +3,11 @@ import { h, Ref } from 'vue';
 
 import EditableCell from './EditableCell.vue';
 
-export function renderEditCell(column: BasicColumn) {
+export function renderEditCell(column) {
   return (record, index) => {
     const _key = column.key;
     const value = record[_key];
-    record.onEdit = async (edit: boolean, submit = false) => {
+    record.onEdit = async (edit, submit = false) => {
       if (!submit) {
         record.editable = edit;
       }
@@ -35,15 +35,15 @@ export function renderEditCell(column: BasicColumn) {
   };
 }
 
-export type EditRecordRow<T = Recordable> = Partial<
-  {
-    onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
-    editable: boolean;
-    onCancel: Fn;
-    onSubmit: Fn;
-    submitCbs: Fn[];
-    cancelCbs: Fn[];
-    validCbs: Fn[];
-    editValueRefs: Recordable<Ref>;
-  } & T
->;
+// export type EditRecordRow<T = Recordable> = Partial<
+//   {
+//     onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
+//     editable: boolean;
+//     onCancel: Fn;
+//     onSubmit: Fn;
+//     submitCbs: Fn[];
+//     cancelCbs: Fn[];
+//     validCbs: Fn[];
+//     editValueRefs: Recordable<Ref>;
+//   } & T
+// >;

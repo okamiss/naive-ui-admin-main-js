@@ -8,8 +8,8 @@ import { renderEditCell } from '../components/editable';
 import { NTooltip, NIcon } from 'naive-ui';
 import { FormOutlined } from '@vicons/antd';
 
-export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
-  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
+export function useColumns(propsRef) {
+  const columnsRef = ref(unref(propsRef).columns);
   let cacheColumns = unref(propsRef).columns;
 
   const getColumnsRef = computed(() => {
@@ -22,7 +22,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
 
   const { hasPermission } = usePermission();
 
-  function isIfShow(action: ActionItem): boolean {
+  function isIfShow(action) {
     const ifShow = action.ifShow;
 
     let isIfShow = true;

@@ -1,20 +1,10 @@
 import type { ComputedRef, Ref } from 'vue';
-import type { FormProps, FormSchema, FormActionType } from '../types/form';
+
 import { unref, toRaw } from 'vue';
 import { isFunction } from '@/utils/is';
 
-declare type EmitType = (event: string, ...args: any[]) => void;
 
-interface UseFormActionContext {
-  emit: EmitType;
-  getProps: ComputedRef<FormProps>;
-  getSchema: ComputedRef<FormSchema[]>;
-  formModel: Recordable;
-  formElRef: Ref<FormActionType>;
-  defaultFormModel: Recordable;
-  loadingSub: Ref<boolean>;
-  handleFormValues: Function;
-}
+
 
 export function useFormEvents({
   emit,
@@ -25,14 +15,14 @@ export function useFormEvents({
   defaultFormModel,
   loadingSub,
   handleFormValues,
-}: UseFormActionContext) {
+}) {
   // 验证
   async function validate() {
     return unref(formElRef)?.validate();
   }
 
   // 提交
-  async function handleSubmit(e?: Event): Promise<object | boolean> {
+  async function handleSubmit(e) {
     e && e.preventDefault();
     loadingSub.value = true;
     const { submitFunc } = unref(getProps);
@@ -49,7 +39,7 @@ export function useFormEvents({
       loadingSub.value = false;
       emit('submit', values);
       return values;
-    } catch (error: any) {
+    } catch (error) {
       emit('submit', false);
       loadingSub.value = false;
       console.error(error);
@@ -64,7 +54,7 @@ export function useFormEvents({
   }
 
   //重置
-  async function resetFields(): Promise<void> {
+  async function resetFields() {
     const { resetFunc, submitOnReset } = unref(getProps);
     resetFunc && isFunction(resetFunc) && (await resetFunc());
 
@@ -80,14 +70,14 @@ export function useFormEvents({
   }
 
   //获取表单值
-  function getFieldsValue(): Recordable {
+  function getFieldsValue() {
     const formEl = unref(formElRef);
     if (!formEl) return {};
     return handleFormValues(toRaw(unref(formModel)));
   }
 
   //设置表单字段值
-  async function setFieldsValue(values: Recordable): Promise<void> {
+  async function setFieldsValue(values) {
     const fields = unref(getSchema)
       .map((item) => item.field)
       .filter(Boolean);
@@ -100,7 +90,7 @@ export function useFormEvents({
     });
   }
 
-  function setLoading(value: boolean): void {
+  function setLoading(value) {
     loadingSub.value = value;
   }
 

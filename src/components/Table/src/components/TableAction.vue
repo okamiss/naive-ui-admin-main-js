@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
   import { defineComponent, PropType, computed, toRaw } from 'vue';
   import { ActionItem } from '@/components/Table';
   import { usePermission } from '@/hooks/web/usePermission';
@@ -44,20 +44,20 @@
     components: { DownOutlined },
     props: {
       actions: {
-        type: Array as PropType<ActionItem[]>,
+        type: Array ,
         default: null,
         required: true,
       },
       dropDownActions: {
-        type: Array as PropType<ActionItem[]>,
+        type: Array ,
         default: null,
       },
       style: {
-        type: String as PropType<String>,
+        type: String,
         default: 'button',
       },
       select: {
-        type: Function as PropType<Function>,
+        type: Function,
         default: () => {},
       },
     },
@@ -80,7 +80,7 @@
       const getDropdownList = computed(() => {
         return (toRaw(props.dropDownActions) || [])
           .filter((action) => {
-            return hasPermission(action.auth as string[]) && isIfShow(action);
+            return hasPermission(action.auth) && isIfShow(action);
           })
           .map((action) => {
             const { popConfirm } = action;
@@ -96,7 +96,7 @@
           });
       });
 
-      function isIfShow(action: ActionItem): boolean {
+      function isIfShow(action) {
         const ifShow = action.ifShow;
 
         let isIfShow = true;
@@ -113,7 +113,7 @@
       const getActions = computed(() => {
         return (toRaw(props.actions) || [])
           .filter((action) => {
-            return hasPermission(action.auth as string[]) && isIfShow(action);
+            return hasPermission(action.auth) && isIfShow(action);
           })
           .map((action) => {
             const { popConfirm } = action;

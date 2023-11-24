@@ -3,7 +3,7 @@
     {{ value }}
   </span>
 </template>
-<script lang="ts">
+<script>
   import { defineComponent, ref, computed, watchEffect, unref, onMounted, watch } from 'vue';
   import { useTransition, TransitionPresets } from '@vueuse/core';
   import { isNumber } from '@/utils/is';
@@ -16,7 +16,7 @@
     decimals: {
       type: Number,
       default: 0,
-      validator(value: number) {
+      validator(value) {
         return value >= 0;
       },
     },
@@ -83,7 +83,7 @@
         });
       }
 
-      function formatNumber(num: number | string) {
+      function formatNumber(num) {
         if (!num) {
           return '';
         }

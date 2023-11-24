@@ -6,12 +6,12 @@ import { propTypes } from '@/utils/propTypes';
 export const basicProps = {
   // 标签宽度  固定宽度
   labelWidth: {
-    type: [Number, String] as PropType<number | string>,
+    type: [Number, String],
     default: 80,
   },
   // 表单配置规则
   schemas: {
-    type: [Array] as PropType<FormSchema[]>,
+    type: [Array],
     default: () => [],
   },
   //布局方式
@@ -44,11 +44,11 @@ export const basicProps = {
   // 显示重置按钮
   showResetButton: propTypes.bool.def(true),
   //重置按钮配置
-  resetButtonOptions: Object as PropType<Partial<ButtonProps>>,
+  resetButtonOptions: Object,
   // 显示确认按钮
   showSubmitButton: propTypes.bool.def(true),
   // 确认按钮配置
-  submitButtonOptions: Object as PropType<Partial<ButtonProps>>,
+  submitButtonOptions: Object,
   //展开收起按钮
   showAdvancedButton: propTypes.bool.def(true),
   // 确认按钮文字
@@ -62,12 +62,12 @@ export const basicProps = {
     default: '重置',
   },
   //grid 配置
-  gridProps: Object as PropType<GridProps>,
+  gridProps: Object,
   //gi配置
-  giProps: Object as PropType<GridItemProps>,
+  giProps: Object,
   //grid 样式
   baseGridStyle: {
-    type: Object as PropType<CSSProperties>,
+    type: Object,
   },
   //是否折叠
   collapsed: {
