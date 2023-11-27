@@ -49,7 +49,7 @@
       const asyncRouteStore = useAsyncRouteStore();
       const settingStore = useProjectSettingStore();
       const menus = ref<any[]>([]);
-      const selectedKeys = ref<string>(currentRoute.name as string);
+      const selectedKeys = ref<string>(currentRoute.name);
       const headerMenuSelectKey = ref<string>('');
 
       const { navMode } = useProjectSetting();
@@ -103,8 +103,8 @@
       function updateSelectedKeys() {
         const matched = currentRoute.matched;
         state.openKeys = matched.map((item) => item.name);
-        const activeMenu: string = (currentRoute.meta?.activeMenu as string) || '';
-        selectedKeys.value = activeMenu ? (activeMenu as string) : (currentRoute.name as string);
+        const activeMenu = (currentRoute.meta?.activeMenu) || '';
+        selectedKeys.value = activeMenu ? (activeMenu) : (currentRoute.name);
       }
 
       function updateMenu() {
@@ -112,39 +112,39 @@
           menus.value = generatorMenu(asyncRouteStore.getMenus);
         } else {
           //混合菜单
-          const firstRouteName: string = (currentRoute.matched[0].name as string) || '';
+          const firstRouteName = (currentRoute.matched[0].name) || '';
           menus.value = generatorMenuMix(asyncRouteStore.getMenus, firstRouteName, props.location);
-          const activeMenu: string = currentRoute?.matched[0].meta?.activeMenu as string;
+          const activeMenu = currentRoute?.matched[0].meta?.activeMenu;
           headerMenuSelectKey.value = (activeMenu ? activeMenu : firstRouteName) || '';
         }
         updateSelectedKeys();
       }
 
       // 点击菜单
-      function clickMenuItem(key: string) {
+      function clickMenuItem(key) {
         if (/http(s)?:/.test(key)) {
           window.open(key);
         } else {
           router.push({ name: key });
         }
-        emit('clickMenuItem' as any, key);
+        emit('clickMenuItem', key);
       }
 
       //展开菜单
-      function menuExpanded(openKeys: string[]) {
+      function menuExpanded(openKeys) {
         if (!openKeys) return;
         const latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1);
-        const isExistChildren = findChildrenLen(latestOpenKey as string);
+        const isExistChildren = findChildrenLen(latestOpenKey);
         state.openKeys = isExistChildren ? (latestOpenKey ? [latestOpenKey] : []) : openKeys;
       }
 
       //查找是否存在子路由
-      function findChildrenLen(key: string) {
+      function findChildrenLen(key) {
         if (!key) return false;
-        const subRouteChildren: string[] = [];
+        const subRouteChildren = [];
         for (const { children, key } of unref(menus)) {
           if (children && children.length) {
-            subRouteChildren.push(key as string);
+            subRouteChildren.push(key);
           }
         }
         return subRouteChildren.includes(key);

@@ -84,7 +84,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
   import {
     ref,
     defineComponent,
@@ -155,13 +155,13 @@
       const deviceHeight = ref(150);
       const tableElRef = ref<ComponentRef>(null);
       const wrapRef = ref<Nullable<HTMLDivElement>>(null);
-      let paginationEl: HTMLElement | null;
+      let paginationEl;
       const isStriped = ref(false);
-      const tableData = ref<Recordable[]>([]);
-      const innerPropsRef = ref<Partial<BasicTableProps>>();
+      const tableData = ref([]);
+      const innerPropsRef = ref();
 
       const getProps = computed(() => {
-        return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
+        return { ...props, ...unref(innerPropsRef) };
       });
 
       const { getLoading, setLoading } = useLoading(getProps);
@@ -183,7 +183,7 @@
         useColumns(getProps);
 
       const state = reactive({
-        tableSize: unref(getProps as any).size || 'medium',
+        tableSize: unref(getProps).size || 'medium',
         isColumnSetting: false,
       });
 
@@ -231,11 +231,11 @@
       //获取分页信息
       const pagination = computed(() => toRaw(unref(getPaginationInfo)));
 
-      function setProps(props: Partial<BasicTableProps>) {
+      function setProps(props) {
         innerPropsRef.value = { ...unref(innerPropsRef), ...props };
       }
 
-      const setStriped = (value: boolean) => (isStriped.value = value);
+      const setStriped = (value) => (isStriped.value = value);
 
       const tableAction = {
         reload,
@@ -258,14 +258,14 @@
         const table = unref(tableElRef);
         if (!table) return;
         if (!unref(getCanResize)) return;
-        const tableEl: any = table?.$el;
+        const tableEl = table?.$el;
         const headEl = tableEl.querySelector('.n-data-table-thead ');
         const { bottomIncludeBody } = getViewportOffset(headEl);
         const headerH = 64;
         let paginationH = 2;
         let marginH = 24;
         if (!isBoolean(unref(pagination))) {
-          paginationEl = tableEl.querySelector('.n-data-table__pagination') as HTMLElement;
+          paginationEl = tableEl.querySelector('.n-data-table__pagination');
           if (paginationEl) {
             const offsetHeight = paginationEl.offsetHeight;
             paginationH += offsetHeight || 0;

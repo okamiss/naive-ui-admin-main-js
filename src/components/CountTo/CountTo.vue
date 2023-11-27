@@ -12,7 +12,7 @@
     startVal: { type: Number, default: 0 },
     endVal: { type: Number, default: 2021 },
     duration: { type: Number, default: 1500 },
-    autoplay: { type: Boolean, default: true },
+    autoplay: { type, default: true },
     decimals: {
       type: Number,
       default: 0,
@@ -20,22 +20,22 @@
         return value >= 0;
       },
     },
-    prefix: { type: String, default: '' },
-    suffix: { type: String, default: '' },
-    separator: { type: String, default: ',' },
-    decimal: { type: String, default: '.' },
+    prefix: { type, default: '' },
+    suffix: { type, default: '' },
+    separator: { type, default: ',' },
+    decimal: { type, default: '.' },
     /**
      * font color
      */
-    color: { type: String },
+    color: { type },
     /**
      * Turn on digital animation
      */
-    useEasing: { type: Boolean, default: true },
+    useEasing: { type, default: true },
     /**
      * Digital animation
      */
-    transition: { type: String, default: 'linear' },
+    transition: { type, default: 'linear' },
   };
 
   export default defineComponent({

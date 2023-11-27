@@ -38,16 +38,16 @@
   const subLoading = ref(false);
 
   const getProps = computed((): FormProps => {
-    return { ...props, ...(unref(propsRef) as any) };
+    return { ...props, ...(unref(propsRef)) };
   });
 
   const subBtuText = computed(() => {
-    const { subBtuText } = propsRef.value as any;
+    const { subBtuText } = propsRef.value;
     return subBtuText || props.subBtuText;
   });
 
   async function setProps(modalProps: Partial<ModalProps>): Promise<void> {
-    propsRef.value = deepMerge(unref(propsRef) || ({} as any), modalProps);
+    propsRef.value = deepMerge(unref(propsRef) || ({}), modalProps);
   }
 
   const getBindValue = computed(() => {
@@ -58,7 +58,7 @@
     };
   });
 
-  function setSubLoading(status: boolean) {
+  function setSubLoading(status) {
     subLoading.value = status;
   }
 

@@ -4,11 +4,11 @@ export const basicProps = {
   ...NModal.props,
   // 确认按钮文字
   subBtuText: {
-    type: String,
+    type,
     default: '确认',
   },
   showIcon: {
-    type: Boolean,
+    type,
     default: false,
   },
   width: {
@@ -16,15 +16,15 @@ export const basicProps = {
     default: 446,
   },
   title: {
-    type: String,
+    type,
     default: '',
   },
   maskClosable: {
-    type: Boolean,
+    type,
     default: false,
   },
   preset: {
-    type: String,
+    type,
     default: 'dialog',
   },
 };

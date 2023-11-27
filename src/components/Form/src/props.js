@@ -16,27 +16,27 @@ export const basicProps = {
   },
   //布局方式
   layout: {
-    type: String,
+    type,
     default: 'inline',
   },
   //是否展示为行内表单
   inline: {
-    type: Boolean,
+    type,
     default: false,
   },
   //大小
   size: {
-    type: String,
+    type,
     default: 'medium',
   },
   //标签位置
   labelPlacement: {
-    type: String,
+    type,
     default: 'left',
   },
   //组件是否width 100%
   isFull: {
-    type: Boolean,
+    type,
     default: true,
   },
   //是否显示操作按钮（查询/重置）
@@ -44,34 +44,34 @@ export const basicProps = {
   // 显示重置按钮
   showResetButton: propTypes.bool.def(true),
   //重置按钮配置
-  resetButtonOptions: Object,
+  resetButtonOptions,
   // 显示确认按钮
   showSubmitButton: propTypes.bool.def(true),
   // 确认按钮配置
-  submitButtonOptions: Object,
+  submitButtonOptions,
   //展开收起按钮
   showAdvancedButton: propTypes.bool.def(true),
   // 确认按钮文字
   submitButtonText: {
-    type: String,
+    type,
     default: '查询',
   },
   //重置按钮文字
   resetButtonText: {
-    type: String,
+    type,
     default: '重置',
   },
   //grid 配置
-  gridProps: Object,
+  gridProps,
   //gi配置
-  giProps: Object,
+  giProps,
   //grid 样式
   baseGridStyle: {
-    type: Object,
+    type,
   },
   //是否折叠
   collapsed: {
-    type: Boolean,
+    type,
     default: false,
   },
   //默认展示的行数

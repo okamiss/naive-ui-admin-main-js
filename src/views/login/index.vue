@@ -94,8 +94,8 @@
   import { PageEnum } from '@/enums/pageEnum';
   import { websiteConfig } from '@/config/website.config';
   interface FormState {
-    username: string;
-    password: string;
+    username;
+    password;
   }
 
   const formRef = ref();
@@ -137,7 +137,7 @@
           const { code, message: msg } = await userStore.login(params);
           message.destroyAll();
           if (code == ResultEnum.SUCCESS) {
-            const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
+            const toPath = decodeURIComponent((route.query?.redirect || '/'));
             message.success('登录成功，即将进入系统');
             if (route.name === LOGIN_NAME) {
               router.replace('/');

@@ -10,7 +10,7 @@ type Instance = TableActionType & {
 };
 
 type RetInstance = Omit<Instance, 'getBindValues'> & {
-  getBindValues: ComputedRef<BasicTableProps>;
+  getBindValues;
 };
 
 export function createTableContext(instance: Instance) {

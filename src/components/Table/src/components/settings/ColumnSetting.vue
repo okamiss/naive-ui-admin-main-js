@@ -38,12 +38,12 @@
                     class="table-toolbar-inner-checkbox"
                     :class="{
                       'table-toolbar-inner-checkbox-dark': getDarkTheme === true,
-                      'no-draggable': element.draggable === false,
+                      'no-draggable'.draggable === false,
                     }"
                   >
                     <span
                       class="drag-icon"
-                      :class="{ 'drag-icon-hidden': element.draggable === false }"
+                      :class="{ 'drag-icon-hidden'.draggable === false }"
                     >
                       <n-icon size="18">
                         <DragOutlined />

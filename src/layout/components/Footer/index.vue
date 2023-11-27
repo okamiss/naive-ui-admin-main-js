@@ -15,7 +15,7 @@
     components: {},
     props: {
       collapsed: {
-        type: Boolean,
+        type,
       },
     },
   };

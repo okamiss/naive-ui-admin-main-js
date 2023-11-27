@@ -5,7 +5,7 @@ import { computed, unref, ref, ComputedRef, watch } from 'vue';
 import { isBoolean } from '@/utils/is';
 import { DEFAULTPAGESIZE, PAGESIZES } from '../const';
 
-export function usePagination(refProps: ComputedRef<BasicTableProps>) {
+export function usePagination(refProps) {
   const configRef = ref<PaginationProps>({});
   const show = ref(true);
 
@@ -54,7 +54,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     return unref(show);
   }
 
-  async function setShowPagination(flag: boolean) {
+  async function setShowPagination(flag) {
     show.value = flag;
   }
 

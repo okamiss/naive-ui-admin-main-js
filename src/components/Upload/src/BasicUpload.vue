@@ -102,8 +102,8 @@ export default defineComponent({
     const state = reactive({
       showModal: false,
       previewUrl: '',
-      originalImgList: [] as string[],
-      imgList: [] as string[],
+      originalImgList: [],
+      imgList: [],
     });
 
     //赋值默认图片显示
@@ -118,7 +118,7 @@ export default defineComponent({
     );
 
     //预览
-    function preview(url: string) {
+    function preview(url) {
       state.showModal = true;
       state.previewUrl = url;
     }
@@ -141,12 +141,12 @@ export default defineComponent({
     }
 
     //组装完整图片地址
-    function getImgUrl(url: string): string {
+    function getImgUrl(url) {
       const { imgUrl } = globSetting;
       return /(^http|https:\/\/)/g.test(url) ? url : `${imgUrl}${url}`;
     }
 
-    function checkFileType(fileType: string) {
+    function checkFileType(fileType) {
       return componentSetting.upload.fileType.includes(fileType);
     }
 
@@ -181,7 +181,7 @@ export default defineComponent({
       const result = res[infoField];
       //成功
       if (code === ResultEnum.SUCCESS) {
-        let imgUrl: string = getImgUrl(result.photo);
+        let imgUrl = getImgUrl(result.photo);
         state.imgList.push(imgUrl);
         state.originalImgList.push(result.photo);
         emit('uploadChange', state.originalImgList);

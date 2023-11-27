@@ -1,7 +1,7 @@
 export interface BasicProps {
-  title?: string;
+  title?;
   dataSource: Function;
-  columns: any[];
-  pagination: object;
-  showPagination: boolean;
+  columns[];
+  pagination;
+  showPagination;
 }

@@ -37,8 +37,8 @@ export function renderEditCell(column) {
 
 // export type EditRecordRow<T = Recordable> = Partial<
 //   {
-//     onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
-//     editable: boolean;
+//     onEdit: (editable, submit?) => Promise<boolean>;
+//     editable;
 //     onCancel: Fn;
 //     onSubmit: Fn;
 //     submitCbs: Fn[];

@@ -75,7 +75,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
   import {
     defineComponent,
     reactive,
@@ -92,7 +92,7 @@
   import { TABS_ROUTES } from '@/store/mutation-types';
   import { useTabsViewStore } from '@/store/modules/tabsView';
   import { useAsyncRouteStore } from '@/store/modules/asyncRoute';
-  import { RouteItem } from '@/store/modules/tabsView';
+
   import { useProjectSetting } from '@/hooks/setting/useProjectSetting';
   import { useMessage } from 'naive-ui';
   import Draggable from 'vuedraggable';
@@ -138,8 +138,8 @@
       const router = useRouter();
       const tabsViewStore = useTabsViewStore();
       const asyncRouteStore = useAsyncRouteStore();
-      const navScroll: any = ref(null);
-      const navWrap: any = ref(null);
+      const navScroll = ref(null);
+      const navWrap = ref(null);
       const isCurrent = ref(false);
       const go = useGo();
 
@@ -164,7 +164,7 @@
       });
 
       // 获取简易的路由对象
-      const getSimpleRoute = (route): RouteItem => {
+      const getSimpleRoute = (route) => {
         const { fullPath, hash, meta, name, params, path, query } = route;
         return { fullPath, hash, meta, name, params, path, query };
       };
@@ -179,8 +179,8 @@
       //动态组装样式 菜单缩进
       const getChangeStyle = computed(() => {
         const { collapsed } = props;
-        const { minMenuWidth, menuWidth }: any = menuSetting.value;
-        const { fixed }: any = multiTabsSetting.value;
+        const { minMenuWidth, menuWidth } = menuSetting.value;
+        const { fixed } = multiTabsSetting.value;
         let lenNum =
           navMode.value === 'horizontal' || !isMixMenuNoneSub.value
             ? '0px'
@@ -230,10 +230,10 @@
         ];
       });
 
-      let cacheRoutes: RouteItem[] = [];
+      let cacheRoutes = [];
       const simpleRoute = getSimpleRoute(route);
       try {
-        const routesStr = storage.get(TABS_ROUTES) as string | null | undefined;
+        const routesStr = storage.get(TABS_ROUTES) | null | undefined;
         cacheRoutes = routesStr ? JSON.parse(routesStr) : [simpleRoute];
       } catch (e) {
         cacheRoutes = [simpleRoute];
@@ -245,7 +245,7 @@
         const route = routes.find((route) => route.path === cacheRoute.path);
         if (route) {
           cacheRoute.meta = route.meta || cacheRoute.meta;
-          cacheRoute.name = (route.name || cacheRoute.name) as string;
+          cacheRoute.name = (route.name || cacheRoute.name);
         }
       });
 
@@ -282,8 +282,8 @@
       };
 
       // 标签页列表
-      const tabsList: any = computed(() => tabsViewStore.tabsList);
-      const whiteList: string[] = [
+      const tabsList = computed(() => tabsViewStore.tabsList);
+      const whiteList = [
         PageEnum.BASE_LOGIN_NAME,
         PageEnum.REDIRECT_NAME,
         PageEnum.ERROR_PAGE_NAME,
@@ -292,7 +292,7 @@
       watch(
         () => route.fullPath,
         (to) => {
-          if (whiteList.includes(route.name as string)) return;
+          if (whiteList.includes(route.name)) return;
           state.activeKey = to;
           tabsViewStore.addTab(getSimpleRoute(route));
           updateNavScroll(true);
@@ -391,7 +391,7 @@
        * @param value 要滚动到的位置
        * @param amplitude 每次滚动的长度
        */
-      function scrollTo(value: number, amplitude: number) {
+      function scrollTo(value, amplitude) {
         const currentScroll = navScroll.value.scrollLeft;
         const scrollWidth =
           (amplitude > 0 && currentScroll + amplitude >= value) ||
@@ -428,7 +428,7 @@
       /**
        * @param autoScroll 是否开启自动滚动功能
        */
-      async function updateNavScroll(autoScroll?: boolean) {
+      async function updateNavScroll(autoScroll) {
         await nextTick();
         if (!navScroll.value) return;
         const containerWidth = navScroll.value.offsetWidth;
@@ -438,7 +438,7 @@
           state.scrollable = true;
           if (autoScroll) {
             let tagList = navScroll.value.querySelectorAll('.tabs-card-scroll-item') || [];
-            [...tagList].forEach((tag: HTMLElement) => {
+            [...tagList].forEach((tag) => {
               // fix SyntaxError
               if (tag.id === `tag${state.activeKey.split('/').join('\/')}`) {
                 tag.scrollIntoView && tag.scrollIntoView();

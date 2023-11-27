@@ -5,11 +5,11 @@ import { isBoolean, isFunction, isArray } from '@/utils/is';
 import { APISETTING } from '../const';
 
 export function useDataSource(
-  propsRef: ComputedRef<BasicTableProps>,
+  propsRef,
   { getPaginationInfo, setPagination, setLoading, tableData },
   emit
 ) {
-  const dataSourceRef = ref<Recordable[]>([]);
+  const dataSourceRef = ref([]);
 
   watchEffect(() => {
     tableData.value = unref(dataSourceRef);
@@ -18,7 +18,7 @@ export function useDataSource(
   watch(
     () => unref(propsRef).dataSource,
     () => {
-      const { dataSource }: any = unref(propsRef);
+      const { dataSource } = unref(propsRef);
       dataSource && (dataSourceRef.value = dataSource);
     },
     {
@@ -27,7 +27,7 @@ export function useDataSource(
   );
 
   const getRowKey = computed(() => {
-    const { rowKey }: any = unref(propsRef);
+    const { rowKey } = unref(propsRef);
     return rowKey
       ? rowKey
       : () => {
@@ -46,7 +46,7 @@ export function useDataSource(
   async function fetch(opt?) {
     try {
       setLoading(true);
-      const { request, pagination, beforeRequest, afterRequest }: any = unref(propsRef);
+      const { request, pagination, beforeRequest, afterRequest } = unref(propsRef);
       if (!request) return;
       //组装分页信息
       const pageField = APISETTING.pageField;
@@ -55,7 +55,7 @@ export function useDataSource(
       const listField = APISETTING.listField;
       const itemCount = APISETTING.countField;
       let pageParams = {};
-      const { page = 1, pageSize = 10 } = unref(getPaginationInfo) as PaginationProps;
+      const { page = 1, pageSize = 10 } = unref(getPaginationInfo);
 
       if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
@@ -131,11 +131,11 @@ export function useDataSource(
     dataSourceRef.value = values;
   }
 
-  function getDataSource(): any[] {
+  function getDataSource()[] {
     return getDataSourceRef.value;
   }
 
-  async function reload(opt?) {
+  async function reload(opt) {
     await fetch(opt);
   }
 

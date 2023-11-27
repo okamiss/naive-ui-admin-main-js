@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script >
   import { defineComponent } from 'vue';
 
   export default defineComponent({
@@ -43,7 +43,7 @@
       batteryStatus: {
         // 电池状态
         type: String,
-        validator: (val: string) => ['充电中', '已充满', '已断开电源'].includes(val),
+        validator: (val) => ['充电中', '已充满', '已断开电源'].includes(val),
       },
     },
   });

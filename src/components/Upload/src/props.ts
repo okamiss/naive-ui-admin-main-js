@@ -4,11 +4,11 @@ import { NUpload } from 'naive-ui';
 export const basicProps = {
   ...NUpload.props,
   accept: {
-    type: String,
+    type,
     default: '.jpg,.png,.jpeg,.svg,.gif',
   },
   helpText: {
-    type: String as PropType<string>,
+    type as PropType<string>,
     default: '',
   },
   maxSize: {

@@ -48,7 +48,7 @@ export function useColumns(propsRef) {
     const columns = cloneDeep(pageColumns);
     return columns
       .filter((column) => {
-        return hasPermission(column.auth as string[]) && isIfShow(column);
+        return hasPermission(column.auth) && isIfShow(column);
       })
       .map((column) => {
         //默认 ellipsis 为true
@@ -57,7 +57,7 @@ export function useColumns(propsRef) {
         if (edit) {
           column.render = renderEditCell(column);
           if (edit) {
-            const title: any = column.title;
+            const title = column.title;
             column.title = () => {
               return renderTooltip(
                 h('span', {}, [
@@ -89,18 +89,18 @@ export function useColumns(propsRef) {
     }
   );
 
-  function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
+  function handleActionColumn(propsRef, columns) {
     const { actionColumn } = unref(propsRef);
     if (!actionColumn) return;
     !columns.find((col) => col.key === 'action') &&
       columns.push({
-        ...(actionColumn as any),
+        ...(actionColumn),
       });
   }
 
   //设置
-  function setColumns(columnList: string[]) {
-    const columns: any[] = cloneDeep(columnList);
+  function setColumns(columnList) {
+    const columns[] = cloneDeep(columnList);
     if (!isArray(columns)) return;
 
     if (!columns.length) {
@@ -112,7 +112,7 @@ export function useColumns(propsRef) {
     if (!isString(columns[0])) {
       columnsRef.value = columns;
     } else {
-      const newColumns: any[] = [];
+      const newColumns[] = [];
       cacheColumns.forEach((item) => {
         if (columnList.includes(item.key)) {
           newColumns.push({ ...item });
@@ -128,7 +128,7 @@ export function useColumns(propsRef) {
   }
 
   //获取
-  function getColumns(): BasicColumn[] {
+  function getColumns() {
     const columns = toRaw(unref(getColumnsRef));
     return columns.map((item) => {
       return { ...item, title: item.title, key: item.key, fixed: item.fixed || undefined };
@@ -136,12 +136,12 @@ export function useColumns(propsRef) {
   }
 
   //获取原始
-  function getCacheColumns(isKey?: boolean): any[] {
+  function getCacheColumns(isKey)[] {
     return isKey ? cacheColumns.map((item) => item.key) : cacheColumns;
   }
 
   //更新原始数据单个字段
-  function setCacheColumnsField(key: string | undefined, value: Partial<BasicColumn>) {
+  function setCacheColumnsField(key, value) {
     if (!key || !value) {
       return;
     }

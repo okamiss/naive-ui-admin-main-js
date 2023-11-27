@@ -53,7 +53,7 @@
         default: null,
       },
       style: {
-        type: String,
+        type,
         default: 'button',
       },
       select: {

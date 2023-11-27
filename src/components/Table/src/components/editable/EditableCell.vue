@@ -61,10 +61,10 @@
         default: '',
       },
       record: {
-        type: Object,
+        type,
       },
       column: {
-        type: Object,
+        type,
         default: () => ({}),
       },
       index: propTypes.number,

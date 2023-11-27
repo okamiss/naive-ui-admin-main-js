@@ -219,7 +219,7 @@
         for (const schema of schemas) {
           const { defaultValue } = schema;
           // handle date type
-          // dateItemType.includes(component as string)
+          // dateItemType.includes(component)
           if (defaultValue) {
             schema.defaultValue = defaultValue;
           }
